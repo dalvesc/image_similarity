@@ -48,3 +48,19 @@ def save_json(image1, image2):
     json_file.close()
 
     
+    
+if __name__ == "__main__":
+
+    images_1 = []
+    images_2 = []
+    label_images_1 = []
+    label_images_2 = []
+
+    read_images(folder_1, folder_2)
+
+    # Compare the images
+    for i in range(len(images_1)):
+        for j in range(len(images_2)):
+            similarity = compare_images(images_1[i], images_2[j])
+            if similarity > 0.8:
+                save_json(label_images_1[i], label_images_2[j])
