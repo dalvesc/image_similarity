@@ -18,6 +18,7 @@ def read_images(folder_1, folder_2):
         img = cv2.resize(img, (224, 224)) # Resize the image
         if img is not None:
             images_1.append(img)
+            label_images_1.append(filename)
 
     for filename in os.listdir(folder_2):
         img = cv2.imread(os.path.join(folder_2,filename)) # Read the image
@@ -25,6 +26,7 @@ def read_images(folder_1, folder_2):
         img = cv2.resize(img, (224, 224)) # Resize the image
         if img is not None:
             images_2.append(img)
+            label_images_2.append(filename)
 
 # Return the similarity between two images
 def compare_images(imageA, imageB):
@@ -33,3 +35,16 @@ def compare_images(imageA, imageB):
     
     return s
 
+# Save json file with the results
+def save_json(image1, image2):
+    # Create the json file
+    json_file = open("./results.json", "a")
+    # Write the results
+    json_file.write("{\n")
+    json_file.write("folder_1\t\"image1\": \"" + str(image1) + "\",\n")
+    json_file.write("folder_2\t\"image2\": \"" + str(image2) + "\",\n")
+    json_file.write("},\n")
+    # Close the json file
+    json_file.close()
+
+    
