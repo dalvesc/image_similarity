@@ -2,9 +2,7 @@
 import os
 import cv2
 from skimage.metrics import structural_similarity as ssim
-import matplotlib.pyplot as plt
-import numpy as np
-
+import skimage
 
 # Folder path
 folder_1 = '' # Change the folder path
@@ -31,7 +29,7 @@ def read_images(folder_1, folder_2):
 # Return the similarity between two images
 def compare_images(imageA, imageB):
     # Compute the structural similarity index for the images
-    s = ssim(imageA, imageB) # Max valor, more similar
+    s = ssim(imageA, imageB) # Valor 1 = 100% similarity
     
     return s
 
@@ -56,11 +54,12 @@ if __name__ == "__main__":
     label_images_1 = []
     label_images_2 = []
 
+    # Read the images
     read_images(folder_1, folder_2)
 
     # Compare the images
     for i in range(len(images_1)):
         for j in range(len(images_2)):
             similarity = compare_images(images_1[i], images_2[j])
-            if similarity > 0.8:
+            if similarity > 0.8: # Minimum similarity
                 save_json(label_images_1[i], label_images_2[j])
