@@ -15,3 +15,4 @@ On terminal use the command
 
  `python3 image_similarity.py`bash
 
+ The results will be in a json file "results.json".
