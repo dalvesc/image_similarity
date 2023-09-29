@@ -1,12 +1,12 @@
 # Imports
+import json
 import os
 import cv2
 from skimage.metrics import structural_similarity as ssim
-import skimage
 
 # Folder path
-folder_1 = '' # Change the folder path
-folder_2 = '' # Change the folder path
+folder_1 = './data1' # Change the folder path
+folder_2 = './data2' # Change the folder path
 
 # Read the images and store them in a list
 def read_images(folder_1, folder_2):
@@ -33,26 +33,27 @@ def compare_images(imageA, imageB):
     
     return s
 
-# Save json file with the results
-def save_json(image1, image2):
-    # Create the json file
-    json_file = open("./results.json", "a")
-    # Write the results
-    json_file.write("{\n")
-    json_file.write("folder_1\t\"image1\": \"" + str(image1) + "\",\n")
-    json_file.write("folder_2\t\"image2\": \"" + str(image2) + "\",\n")
-    json_file.write("},\n")
-    # Close the json file
-    json_file.close()
+# Save json object with the results
+def save_json(image1, image2, similarity):
+    # Create the json object
+    dict = {
+        "similarity: " + str(similarity): {
+        "folder1": folder_1 + '/' + str(image1),
+        "folder2": folder_2 + '/' + str(image2)
+        }
+    }
+    
+    return dict
 
     
     
 if __name__ == "__main__":
 
-    images_1 = []
-    images_2 = []
-    label_images_1 = []
-    label_images_2 = []
+    images_1 = [] # List of images from folder 1
+    images_2 = [] # List of images from folder 2
+    label_images_1 = [] # List of labels from folder 1
+    label_images_2 = [] # List of labels from folder 2
+    json_list = [] # List of json objects
 
     # Read the images
     read_images(folder_1, folder_2)
@@ -62,4 +63,9 @@ if __name__ == "__main__":
         for j in range(len(images_2)):
             similarity = compare_images(images_1[i], images_2[j])
             if similarity > 0.8: # Minimum similarity
-                save_json(label_images_1[i], label_images_2[j])
+                json_list.append(save_json(label_images_1[i], label_images_2[j], similarity))
+
+    # Save the json file
+    out_file = open("results.json", "w")
+    json.dump(json_list, out_file, indent=6)
+    out_file.close()
