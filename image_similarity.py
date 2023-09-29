@@ -5,8 +5,8 @@ import cv2
 from skimage.metrics import structural_similarity as ssim
 
 # Folder path
-folder_1 = './data1' # Change the folder path
-folder_2 = './data2' # Change the folder path
+folder_1 = './dataset1' # Change the folder path
+folder_2 = './dataset2' # Change the folder path
 
 # Read the images and store them in a list
 def read_images(folder_1, folder_2):
