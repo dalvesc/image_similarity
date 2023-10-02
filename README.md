@@ -13,6 +13,6 @@ Remember to change the path of the folders you want to use
 
 On terminal use the command 
 
- `python3 image_similarity.py`bash
+ `python3 image_similarity.py`
 
  The results will be in a json file "results.json".
